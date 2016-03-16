@@ -53,6 +53,17 @@ class RecortaUrls(webapp.webApp):
                             + "<h2>Anteriores URLs acortadas</h2>"
                             + self.imprimeHTML()
                             + "</body></html>")
+
+            elif recurso == "/favicon.ico":
+                httpCode = "200 OK"
+                httpBody = ("<html><body><form action='/' method='POST'>"
+                            + "Recorte una URL <br>"
+                            + "<input type='text' name='url'/></br>"
+                            + "<input type='submit' value='Recorta URL' "
+                            + "/></form><br><br>"
+                            + "<h2>Anteriores URLs acortadas</h2>"
+                            + self.imprimeHTML()
+                            + "</body></html>")
             else:
                 num_recurso = int(recurso.split("/")[1])
                 print num_recurso
