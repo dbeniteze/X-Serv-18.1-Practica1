@@ -1,9 +1,11 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 #! -*- coding: utf-8 -*-
 
 import webapp
 import sys
 import urllib
+import urllib.parse
+#from urllib.parse import unquote
 
 
 class RecortaUrls(webapp.webApp):
@@ -20,7 +22,7 @@ class RecortaUrls(webapp.webApp):
     def imprimeHTML(self):
         """Formulario con las urls introducidas y las acortadas"""
         html = ""
-        for keys, values in self.real_a_corta.iteritems():
+        for keys, values in self.real_a_corta.items():
             html = (html
                     + "<a href=" + keys + ">"
                     + keys + "</a>"
@@ -66,8 +68,8 @@ class RecortaUrls(webapp.webApp):
                             + "</body></html>")
             else:
                 num_recurso = int(recurso.split("/")[1])
-                print num_recurso
-                print self.corta_a_real
+                print (num_recurso)
+                print (self.corta_a_real)
                 if num_recurso in self.corta_a_real:
                     httpCode = "301"
                     httpBody = ("<html><body><meta http-equiv='refresh'"
@@ -83,7 +85,7 @@ class RecortaUrls(webapp.webApp):
         elif metodo == "POST":
             if recurso == "/":
                 httpCode = "200 OK"
-                direccion = urllib.unquote(body.split("=")[1])
+                direccion = urllib.parse.unquote(body.split("=")[1])
                 prueba = direccion.split("://")[0]
                 url = "http://" + url
                 if prueba != "http":

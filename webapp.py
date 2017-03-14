@@ -1,13 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 """
 webApp class
  Root for hierarchy of classes implementing web applications
-
  Copyright Jesus M. Gonzalez-Barahona and Gregorio Robles (2009-2015)
  jgb @ gsyc.es
  TSAI, SAT and SARO subjects (Universidad Rey Juan Carlos)
- October 2009 - February 2015
+ October 2009 - March 2017
 """
 
 import socket
@@ -15,7 +14,6 @@ import socket
 
 class webApp:
     """Root of a hierarchy of classes implementing web applications
-
     This class does almost nothing. Usually, new classes will
     inherit from it, and by redefining "parse" and "process" methods
     will implement the logic of a web application in particular.
@@ -28,7 +26,6 @@ class webApp:
 
     def process(self, parsedRequest):
         """Process the relevant elements of the request.
-
         Returns the HTTP code for the reply, and an HTML page.
         """
 
@@ -49,16 +46,16 @@ class webApp:
         # parse and process methods (in a loop)
 
         while True:
-            print 'Waiting for connections'
+            print('Waiting for connections')
             (recvSocket, address) = mySocket.accept()
-            print 'HTTP request received (going to parse and process):'
-            request = recvSocket.recv(2048)
-            print request
+            print('HTTP request received (going to parse and process):')
+            request = recvSocket.recv(2048).decode('utf-8')
+            print(request)
             parsedRequest = self.parse(request)
             (returnCode, htmlAnswer) = self.process(parsedRequest)
-            print 'Answering back...'
-            recvSocket.send("HTTP/1.1 " + returnCode + " \r\n\r\n"
-                            + htmlAnswer + "\r\n")
+            print('Answering back...')
+            recvSocket.send(bytes("HTTP/1.1 " + returnCode + " \r\n\r\n"
+                            + htmlAnswer + "\r\n", 'utf-8'))
             recvSocket.close()
 
 if __name__ == "__main__":
